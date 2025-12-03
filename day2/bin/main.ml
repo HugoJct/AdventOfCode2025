@@ -1,3 +1,5 @@
+module StringSet = Set.Make(String);;
+
 let parse_file filepath = 
   let file = open_in filepath in
   let tryread () = 
@@ -15,9 +17,28 @@ let power x n =
     else (power_aux x (n-1) (acc * x)) in 
   power_aux x n 1;;
 
+let chunks str n = 
+  let rec aux str_cur acc =
+    if (Seq.length str_cur) > 0
+      then 
+      aux (Seq.drop n str_cur) ((String.of_seq (Seq.take n str_cur))::acc)
+    else (
+        (List.rev acc)
+    ) in 
+  aux (String.to_seq str) [];;
+
 let test x =
-  let strilen = (String.length (string_of_int x)) in 
-  strilen mod 2 = 0 && (x mod (1 * (power 10 (strilen / 2)) + 1)) = 0
+  let strx = (string_of_int x) and
+  strilen = (String.length (string_of_int x)) in
+  let rec aux i n = 
+    let parts = (chunks strx i) in 
+    let res = (List.length (StringSet.to_list (StringSet.of_list parts))) = 1 in 
+    if i > n 
+      then false
+    else if res 
+      then true
+    else (aux (i+1) n) in 
+    aux 1 (strilen / 2);;
 
 let check_range lowb highb = 
   let rec check_range_aux lowb highb i acc =
