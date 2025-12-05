@@ -26,19 +26,43 @@ let split_ranges lines  =
       | e::l -> 
         begin
           if (String.length e) = 0 
-            then ((List.rev (List.map (fun x -> build_range x) acc)),  (List.map (fun x -> int_of_string x) l)) 
+            then (List.rev (List.map (fun x -> build_range x) acc))
             else (aux l (e::acc))
         end
       | _ -> failwith "empty line not found"
     end in 
   aux lines [];;
 
+let combine_ranges ranges =
+  let rec aux ranges acc =
+  match ranges with
+    | (lowb1, highb1)::(lowb2, highb2)::l -> 
+      begin 
+        if lowb2 >= lowb1 && highb2 <= highb1 (* if second range inside of first *)
+          then aux ((lowb1, highb1)::l) acc
+        else if lowb1 >= lowb2 && highb1 <= highb2  (* if first range inside of second *)
+          then aux ((lowb2, highb2)::l) acc
+        else if lowb1 <= lowb2 && highb1 >= lowb2 
+          then aux ((lowb1, highb2)::l) acc
+        else if lowb2 <= lowb1 && highb1 >= lowb2 
+          then aux ((lowb2, highb1)::l) acc
+        else aux ((lowb2, highb2)::l) ((lowb1, highb1)::acc)
+      end
+    | e::[] -> List.rev (e::acc)
+    | [] -> List.rev acc in 
+  aux ranges [];;
+
 let () = 
   let input = parse_file "res/input.txt" in 
-  let (fresh_ids, values) = split_ranges input in
-  print_int (List.fold_left (fun acc x -> 
+  let fresh_ids = split_ranges input in
+  let sorted_fresh_ids = (List.sort (fun (lowa, _) (lowb, _) -> 
     begin
-      if (List.exists (fun (lowb, highb) -> x >= lowb && x <= highb) fresh_ids)
-        then acc + 1 else acc
-    end
-  ) 0 values) ; print_newline ();;
+      if lowa > lowb 
+        then 1 
+      else if lowb > lowa 
+        then -1 
+      else 
+        0
+    end) fresh_ids) in 
+  let fresh_ids_combined = (combine_ranges sorted_fresh_ids) in 
+  print_int (List.fold_left (fun acc (l, h) -> acc + (h - l + 1) ) 0 fresh_ids_combined) ; print_newline ();;
