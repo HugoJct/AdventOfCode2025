@@ -7,6 +7,7 @@
 |   3   |    ⭐   |    🌟   |
 |   4   |    ⭐   |    🌟   |
 |   5   |    ⭐   |    🌟   |
+|   5   |    ⭐   |    /   |
 
 I often modify my code to resolve part 2 so checkout the commits to see part 1.
 
