@@ -11,28 +11,39 @@ let parse_file filepath =
     end in 
   get_lines [];;
 
-let () = 
-  let regex = Str.regexp {|[ \t]+|} in 
-  let input = (List.map 
-                (fun x -> (Str.split regex x) |> Array.of_list) 
-                (parse_file "res/input.txt")) 
-    |> Array.of_list in 
-  let total = ref 0 in 
-  let j = ref 0 in 
-  while !j < (Array.length input.(0))
+let parse_numbers lines =
+  let numbers_grouped = ref [] in 
+  let current_group = ref [] in 
+  for column = 0 to (Array.length lines.(0)) - 1
     do begin
-      let result = ref 0 in
-      for i = 1 to (Array.length input) - 1
-        do begin 
-        let operator = input.(0).(!j) in
-        if operator = "*"
-          then begin
-            if operator = "*" && !result = 0 then result := 1 ;
-            result := !result * (int_of_string input.(i).(!j))
-          end
-        else result := !result + (int_of_string input.(i).(!j))
+      let number = Array.make (Array.length lines) ' ' in 
+      for line = 0 to (Array.length lines) - 1
+        do begin
+          number.(line) <- lines.(line).(column)
         end done ;
-      j := !j + 1;
-      total := !total + !result;
-    end done;
-  print_int !total ; print_newline ();;
+      try 
+        current_group := (number |> Array.to_seq |> String.of_seq |> String.trim |> int_of_string)::(!current_group)
+      with Failure _ -> 
+        begin
+          numbers_grouped := (!current_group)::!numbers_grouped ; 
+          current_group := []
+        end
+    end done ;
+    numbers_grouped := (!current_group)::!numbers_grouped ; 
+  List.rev !numbers_grouped;;
+
+let () = 
+  let input = (parse_file "res/input.txt") in 
+  let arr = (List.map (fun x -> (List.of_seq (String.to_seq x)) |> List.rev |> Array.of_list) (List.tl input)) |> List.rev |> Array.of_list in 
+  let numbers = (parse_numbers arr) in 
+  let regex = Str.regexp {|[ \t]+|} in 
+  let operators = (Str.split regex (List.hd input)) |> List.rev in 
+  let values = (List.mapi (fun i x -> 
+    begin
+      match x with
+      | "*" -> (List.fold_left (fun acc x -> acc * x) 1 (List.nth numbers i))
+      | "+" -> (List.fold_left (fun acc x -> acc + x) 0 (List.nth numbers i))        
+      | _ -> failwith "impossible"
+    end
+  ) operators) in 
+  print_int (List.fold_left (fun acc x -> acc + x) 0 values) ; print_newline ();

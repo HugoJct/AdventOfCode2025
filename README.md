@@ -7,7 +7,7 @@
 |   3   |    [⭐](https://github.com/HugoJct/AdventOfCode2025/blob/0324de9f36ff868f6e57f2cc71bc0c5e800ac8fb/day3/bin/main.ml)   |    [🌟](https://github.com/HugoJct/AdventOfCode2025/blob/main/day3/bin/main.ml)   |
 |   4   |    [⭐](https://github.com/HugoJct/AdventOfCode2025/blob/cb678b1efe7cde671037f62c15a9215d227f0777/day4/bin/main.ml)   |    [🌟](https://github.com/HugoJct/AdventOfCode2025/blob/main/day4/bin/main.ml)   |
 |   5   |    [⭐](https://github.com/HugoJct/AdventOfCode2025/blob/7dec1ad7c9e35c437f21bfb52e0551f1db49bf6d/day5/bin/main.ml)   |    [🌟](https://github.com/HugoJct/AdventOfCode2025/blob/main/day5/bin/main.ml)   |
-|   6   |    [⭐](https://github.com/HugoJct/AdventOfCode2025/blob/e7cd3c73c54387a66dbfa3ad60989214e4d358ac/day6/bin/main.ml)   |    /   |
+|   6   |    [⭐](https://github.com/HugoJct/AdventOfCode2025/blob/e7cd3c73c54387a66dbfa3ad60989214e4d358ac/day6/bin/main.ml)   |    [🌟](https://github.com/HugoJct/AdventOfCode2025/blob/main/day6/bin/main.ml)   |
 |   7   |    [⭐](https://github.com/HugoJct/AdventOfCode2025/blob/49632788822d/day7/bin/main.ml)   |    [🌟](https://github.com/HugoJct/AdventOfCode2025/blob/main/day7/bin/main.ml)   |
 
 Click on stars to view my solution
