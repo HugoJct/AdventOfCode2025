@@ -1,0 +1,21 @@
+(lang dune 3.20)
+
+(name day7)
+
+(generate_opam_files true)
+
+(source
+ (github HugoJct/AdventOfCode2025))
+
+(authors "Hugo Jacotot <hjacotot@protonmail.com>")
+
+(maintainers "Hugo Jacotot <hjacotot@protonmail.com>")
+
+(license MIT)
+
+(package
+ (name day7)
+ (synopsis "Advent of code 2025 - Day 7")
+ (depends ocaml))
+
+; See the complete stanza docs at https://dune.readthedocs.io/en/stable/reference/dune-project/index.html
